@@ -1,8 +1,10 @@
 package object reactive {
-  implicit class ForeachableForwardable[V, S <: Foreachable[V]](val self: S with Foreachable[V]) extends AnyVal with Forwardable[V, S] {
+  implicit class ForeachableForwardable[V, S <: Foreachable[V]](_self: S with Foreachable[V]) extends Forwardable[V, S] {
+    val self: S = _self
+      
     def foreach(f: V => Unit)(implicit observing: Observing) = {
-      self.foreach(f)
-      self
+      _self.foreach(f)
+      _self
     }
   }
 }
